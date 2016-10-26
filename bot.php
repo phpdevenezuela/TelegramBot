@@ -1,9 +1,18 @@
 <?php
+
 /**
-* Codigo base encontrado en https://core.telegram.org/bots/samples/hellobot.
-*/
-define('BOT_TOKEN', '12345678:replace-me-with-real-token');
+ * Codigo base encontrado en https://core.telegram.org/bots/samples/hellobot.
+ */
+
+require './vendor/autoload.php';
+
+$dotEnv = new Dotenv\Dotenv(__DIR__);
+$dotEnv->load();
+
+
+define('BOT_TOKEN', getenv('BOT_TOKEN'));
 define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
+define('WEBHOOK_URL', getenv('WEBHOOK_URL'));
 
 function apiRequestWebhook($method, $parameters)
 {
@@ -47,7 +56,7 @@ function exec_curl_request($handle)
 
     if ($http_code >= 500) {
         // do not wat to DDOS server if something goes wrong
-    sleep(10);
+        sleep(10);
 
         return false;
     } elseif ($http_code != 200) {
@@ -87,9 +96,9 @@ function apiRequest($method, $parameters)
 
     foreach ($parameters as $key => &$val) {
         // encoding to JSON array parameters, for example reply_markup
-    if (!is_numeric($val) && !is_string($val)) {
-        $val = json_encode($val);
-    }
+        if (!is_numeric($val) && !is_string($val)) {
+            $val = json_encode($val);
+        }
     }
     $url = API_URL.$method.'?'.http_build_query($parameters);
 
@@ -132,35 +141,43 @@ function apiRequestJson($method, $parameters)
 function processMessage($message)
 {
     // process incoming message
-  $message_id = $message['message_id'];
+    $message_id = $message['message_id'];
     $chat_id = $message['chat']['id'];
     if (isset($message['text'])) {
         // incoming text message
-    $text = $message['text'];
+        $text = $message['text'];
 
         if (strpos($text, '/start') === 0) {
-            apiRequestJson('sendMessage', ['chat_id' => $chat_id, 'text' => 'Hola', 'reply_markup' => [
-        'keyboard'          => [['Hola', 'Epale']],
-        'one_time_keyboard' => true,
-        'resize_keyboard'   => true, ]]);
+            apiRequestJson(
+                'sendMessage',
+                [
+                    'chat_id'      => $chat_id,
+                    'text'         => 'Hola',
+                    'reply_markup' => [
+                        'keyboard'          => [['Hola', 'Epale']],
+                        'one_time_keyboard' => true,
+                        'resize_keyboard'   => true,
+                    ],
+                ]
+            );
         } elseif ($text === 'Hola' || $text === 'Epale') {
             apiRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Es un placer conocerte']);
         } elseif (strpos($text, '/stop') === 0) {
             // stop now
         } else {
-            apiRequestWebhook('sendMessage', ['chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => 'Excelente']);
+            apiRequestWebhook(
+                'sendMessage',
+                ['chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => 'Excelente']
+            );
         }
     } else {
         apiRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Yo sólo entiendo mensajes de texto']);
     }
 }
 
-
-define('WEBHOOK_URL', 'https://my-site.example.com/secret-path-for-webhooks/');
-
 if (php_sapi_name() == 'cli') {
     // if run from console, set or delete webhook
-  apiRequest('setWebhook', ['url' => isset($argv[1]) && $argv[1] == 'delete' ? '' : WEBHOOK_URL]);
+    apiRequest('setWebhook', ['url' => isset($argv[1]) && $argv[1] == 'delete' ? '' : WEBHOOK_URL]);
     exit;
 }
 
@@ -170,7 +187,7 @@ $update = json_decode($content, true);
 
 if (!$update) {
     // receive wrong update, must not happen
-  exit;
+    exit;
 }
 
 if (isset($update['message'])) {
