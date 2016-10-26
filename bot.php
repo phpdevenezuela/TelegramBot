@@ -12,6 +12,7 @@ $dotEnv->load();
 
 define('BOT_TOKEN', getenv('BOT_TOKEN'));
 define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
+define('WEBHOOK_URL', getenv('WEBHOOK_URL'));
 
 function apiRequestWebhook($method, $parameters)
 {
@@ -173,9 +174,6 @@ function processMessage($message)
         apiRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'I understand only text messages']);
     }
 }
-
-
-define('WEBHOOK_URL', 'https://my-site.example.com/secret-path-for-webhooks/');
 
 if (php_sapi_name() == 'cli') {
     // if run from console, set or delete webhook
