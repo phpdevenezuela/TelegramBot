@@ -8,7 +8,7 @@ define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
 function apiRequestWebhook($method, $parameters)
 {
     if (!is_string($method)) {
-        error_log("Method name must be a string\n");
+        error_log("El nombre del método debe ser una cadena de texto\n");
 
         return false;
     }
@@ -16,7 +16,7 @@ function apiRequestWebhook($method, $parameters)
     if (!$parameters) {
         $parameters = [];
     } elseif (!is_array($parameters)) {
-        error_log("Parameters must be an array\n");
+        error_log("Los parámetros deben ser un arreglo/matriz\n");
 
         return false;
     }
@@ -36,7 +36,7 @@ function exec_curl_request($handle)
     if ($response === false) {
         $errno = curl_errno($handle);
         $error = curl_error($handle);
-        error_log("Curl returned error $errno: $error\n");
+        error_log("Curl retornó un error $errno: $error\n");
         curl_close($handle);
 
         return false;
@@ -52,16 +52,16 @@ function exec_curl_request($handle)
         return false;
     } elseif ($http_code != 200) {
         $response = json_decode($response, true);
-        error_log("Request has failed with error {$response['error_code']}: {$response['description']}\n");
+        error_log("La solicitud falló con el error {$response['error_code']}: {$response['description']}\n");
         if ($http_code == 401) {
-            throw new Exception('Invalid access token provided');
+            throw new Exception('El token provisto es inválido');
         }
 
         return false;
     } else {
         $response = json_decode($response, true);
         if (isset($response['description'])) {
-            error_log("Request was successfull: {$response['description']}\n");
+            error_log("La solicitud fue exitosa: {$response['description']}\n");
         }
         $response = $response['result'];
     }
@@ -72,7 +72,7 @@ function exec_curl_request($handle)
 function apiRequest($method, $parameters)
 {
     if (!is_string($method)) {
-        error_log("Method name must be a string\n");
+        error_log("El nombre del método debe ser una cadena de texto\n");
 
         return false;
     }
@@ -80,7 +80,7 @@ function apiRequest($method, $parameters)
     if (!$parameters) {
         $parameters = [];
     } elseif (!is_array($parameters)) {
-        error_log("Parameters must be an array\n");
+        error_log("Los parámetros deben ser un arreglo/matriz\n");
 
         return false;
     }
@@ -104,7 +104,7 @@ function apiRequest($method, $parameters)
 function apiRequestJson($method, $parameters)
 {
     if (!is_string($method)) {
-        error_log("Method name must be a string\n");
+        error_log("El nombre del método debe ser una cadena de texto\n");
 
         return false;
     }
@@ -112,7 +112,7 @@ function apiRequestJson($method, $parameters)
     if (!$parameters) {
         $parameters = [];
     } elseif (!is_array($parameters)) {
-        error_log("Parameters must be an array\n");
+        error_log("Los parámetros deben ser un arreglo/matriz\n");
 
         return false;
     }
@@ -139,19 +139,19 @@ function processMessage($message)
     $text = $message['text'];
 
         if (strpos($text, '/start') === 0) {
-            apiRequestJson('sendMessage', ['chat_id' => $chat_id, 'text' => 'Hello', 'reply_markup' => [
-        'keyboard'          => [['Hello', 'Hi']],
+            apiRequestJson('sendMessage', ['chat_id' => $chat_id, 'text' => 'Hola', 'reply_markup' => [
+        'keyboard'          => [['Hola', 'Epale']],
         'one_time_keyboard' => true,
         'resize_keyboard'   => true, ]]);
-        } elseif ($text === 'Hello' || $text === 'Hi') {
-            apiRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Nice to meet you']);
+        } elseif ($text === 'Hola' || $text === 'Epale') {
+            apiRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Es un placer conocerte']);
         } elseif (strpos($text, '/stop') === 0) {
             // stop now
         } else {
-            apiRequestWebhook('sendMessage', ['chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => 'Cool']);
+            apiRequestWebhook('sendMessage', ['chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => 'Excelente']);
         }
     } else {
-        apiRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'I understand only text messages']);
+        apiRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Yo sólo entiendo mensajes de texto']);
     }
 }
 
