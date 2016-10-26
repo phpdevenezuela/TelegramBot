@@ -11,7 +11,7 @@ $dotEnv->load();
 
 
 define('BOT_TOKEN', getenv('BOT_TOKEN'));
-define('API_URL', 'https://api.telegram.org/bot' . BOT_TOKEN . '/');
+define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
 define('WEBHOOK_URL', getenv('WEBHOOK_URL'));
 
 function apiRequestWebhook($method, $parameters)
@@ -100,7 +100,7 @@ function apiRequest($method, $parameters)
             $val = json_encode($val);
         }
     }
-    $url = API_URL . $method . '?' . http_build_query($parameters);
+    $url = API_URL.$method.'?'.http_build_query($parameters);
 
     $handle = curl_init($url);
     curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
@@ -151,12 +151,12 @@ function processMessage($message)
             apiRequestJson(
                 'sendMessage',
                 [
-                    'chat_id' => $chat_id,
-                    'text' => 'Hola',
+                    'chat_id'      => $chat_id,
+                    'text'         => 'Hola',
                     'reply_markup' => [
-                        'keyboard' => [['Hola', 'Epale']],
+                        'keyboard'          => [['Hola', 'Epale']],
                         'one_time_keyboard' => true,
-                        'resize_keyboard' => true,
+                        'resize_keyboard'   => true,
                     ],
                 ]
             );
