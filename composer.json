@@ -1,0 +1,10 @@
+{
+    "name": "phpvzla/telegram-bot",
+    "license": "",
+    "description": "Bot para el Canal de Telegram de la comunidad PHP Vzla",
+    "require": {
+        "vlucas/phpdotenv": "^2.4",
+        "monolog/monolog": "^1.21",
+        "guzzlehttp/guzzle": "^6.2"
+    }
+}
