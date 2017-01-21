@@ -6,6 +6,9 @@ define('BOT_TOKEN', '12345678:replace-me-with-real-token');
 define('WEBHOOK_URL', 'https://your.webhook/url/bot.php');
 define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
 
+/**
+ * @param string $method
+ */
 function apiRequestWebhook($method, $parameters)
 {
     if (!is_string($method)) {
@@ -29,6 +32,9 @@ function apiRequestWebhook($method, $parameters)
     return true;
 }
 
+/**
+ * @param resource $handle
+ */
 function exec_curl_request($handle)
 {
     $response = curl_exec($handle);
@@ -70,6 +76,9 @@ function exec_curl_request($handle)
     return $response;
 }
 
+/**
+ * @param string $method
+ */
 function apiRequest($method, $parameters)
 {
     if (!is_string($method)) {
@@ -105,6 +114,9 @@ function apiRequest($method, $parameters)
     return exec_curl_request($handle);
 }
 
+/**
+ * @param string $method
+ */
 function apiRequestJson($method, $parameters)
 {
     if (!is_string($method)) {
