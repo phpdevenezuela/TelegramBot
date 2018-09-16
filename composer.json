@@ -1,0 +1,20 @@
+{
+    "name": "alexr1712/phpvetelegrambot",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Alexander Rodriguez",
+            "email": "alexr1712@gmail.com"
+        }
+    ],
+    "require": {
+    	"php": ">=5.6.0",
+        "phpunit/phpunit": "^6.1"
+    },
+
+        "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}

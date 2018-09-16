@@ -1,0 +1,11 @@
+language: php
+php:
+  - 7.2.9
+
+mysql:
+  database: botdatabase
+  username: root
+  encoding: utf8
+  
+before_install:
+  - sudo apt-get update > /dev/null  
