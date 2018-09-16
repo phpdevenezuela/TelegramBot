@@ -1,13 +1,14 @@
 <?php
+
 use App\Event;
 
 // Filter User if spammer
 
-Event::listen('new_chat_member', function($member, $bot, $update){
+Event::listen('new_chat_member', function ($member, $bot, $update) {
     echo 'Event New Member fired!';
     $chat_id = $update['message']['chat']['id'];
     $user_id = $update['message']['new_chat_member']['id'];
-    
+
     $str = $update['message']['new_chat_member']['first_name'];
     $re = '/\p{Han}+/miu';
     preg_match_all($re, $str, $matches, PREG_SET_ORDER, 0);
@@ -24,8 +25,7 @@ Event::listen('new_chat_member', function($member, $bot, $update){
         $chat_id = $update['message']['chat']['id'];
 
         $bot->sendMessage($chat_id, $welcome_text, [
-            'parse_mode' => 'HTML'
+            'parse_mode' => 'HTML',
         ]);
     }
-    
 });

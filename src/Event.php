@@ -1,27 +1,30 @@
 <?php
 
 /**
- * 
- * Events and Triggers
+ * Events and Triggers.
+ *
  * @author  Alexander Rodriguez <alexr1712@gmail.com>
- * 
  */
+
 namespace App;
 
-class Event {
+class Event
+{
     private static $events = [];
-    public static function listen($name, $callback) {
+
+    public static function listen($name, $callback)
+    {
         self::$events[$name][] = $callback;
     }
-    public static function trigger($name, $argument = null) {
+
+    public static function trigger($name, $argument = null)
+    {
         foreach (self::$events[$name] as $event => $callback) {
-            if($argument && is_array($argument)) {
+            if ($argument && is_array($argument)) {
                 call_user_func_array($callback, $argument);
-            }
-            elseif ($argument && !is_array($argument)) {
+            } elseif ($argument && !is_array($argument)) {
                 call_user_func($callback, $argument);
-            }
-            else {
+            } else {
                 call_user_func($callback);
             }
         }
