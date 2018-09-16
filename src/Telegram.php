@@ -177,7 +177,16 @@ class Telegram
         $parameters['until_date'] = $until_date;
 
         return $this->apiRequest('kickChatMember', $parameters);
-    } 
+    }
+
+    public function deleteMessage($chat_id, $message_id)
+    {
+        $parameters = [];
+        $parameters['chat_id']    = $chat_id;
+        $parameters['message_id']    = $message_id;
+
+        return $this->apiRequest('deleteMessage', $parameters);
+    }     
 
     public function setWebhook($certificate = null, $max_connections = null, $allowed_updates = [])
     {
