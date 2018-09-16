@@ -2,6 +2,7 @@
 
 [![StyleCI](https://styleci.io/repos/75344733/shield?branch=master)](https://styleci.io/repos/75344733)
 
+[![ScrutinizerCI](https://scrutinizer-ci.com/g/AlexR1712/TelegramBot/?branch=master)](https://scrutinizer-ci.com/g/AlexR1712/TelegramBot/badges/quality-score.png?b=master)
 Bot para el Canal de Telegram de la comunidad PHP Vzla
 
 ## Instrucciones
