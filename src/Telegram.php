@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Telegram Client Class
+ * Telegram Client Class.
+ *
  * @author  Alexander Rodriguez <alexr1712@gmail.com>
  */
 
@@ -15,7 +16,7 @@ class Telegram
 
     public function __construct($config, $pwrtelegram = false)
     {
-        /**
+        /*
          * Can use PWRTelegram for active more power of telegram.
          */
         $this->apiUrl = ($pwrtelegram) ? 'https://api.pwrtelegram.xyz/bot'.$config['TELEGRAM_TOKEN'].'/' : 'https://api.telegram.org/bot'.$config['TELEGRAM_TOKEN'].'/';
@@ -172,8 +173,8 @@ class Telegram
     public function kickChatMember($chat_id, $user_id, $until_date = null)
     {
         $parameters = [];
-        $parameters['chat_id']    = $chat_id;
-        $parameters['user_id']    = $user_id;
+        $parameters['chat_id'] = $chat_id;
+        $parameters['user_id'] = $user_id;
         $parameters['until_date'] = $until_date;
 
         return $this->apiRequest('kickChatMember', $parameters);
@@ -182,11 +183,11 @@ class Telegram
     public function deleteMessage($chat_id, $message_id)
     {
         $parameters = [];
-        $parameters['chat_id']    = $chat_id;
-        $parameters['message_id']    = $message_id;
+        $parameters['chat_id'] = $chat_id;
+        $parameters['message_id'] = $message_id;
 
         return $this->apiRequest('deleteMessage', $parameters);
-    }     
+    }
 
     public function setWebhook($certificate = null, $max_connections = null, $allowed_updates = [])
     {

@@ -2,5 +2,5 @@
 
 return [
     'TELEGRAM_TOKEN' => '',
-    'WEBHOOK_URL'    => ''
+    'WEBHOOK_URL'    => '',
 ];
