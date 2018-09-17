@@ -5,11 +5,10 @@ use App\Event;
 // Filter User if spammer
 
 Event::listen('text', function ($text, $bot, $update) {
-        if ($text === 'ping') {
-            $bot->sendMessage($update['message']['chat']['id'], 'pong!');
-        }
+    if ($text === 'ping') {
+        $bot->sendMessage($update['message']['chat']['id'], 'pong!');
+    }
 });
-
 
 Event::listen('new_chat_member', function ($member, $bot, $update) {
     echo 'Event New Member fired!\n';
