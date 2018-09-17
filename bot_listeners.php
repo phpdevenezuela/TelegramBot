@@ -23,9 +23,6 @@ Event::listen('new_chat_member', function ($member, $bot, $update) {
         // if the user has chinese characters the bot kick that user
         // $until = time()+(366 * 24 * 60 * 60);
         $res = $bot->kickChatMember($chat_id, $user_id);
-        $bot->sendMessage($chat_id, $welcome_text, [
-            'parse_mode' => 'HTML',
-        ]);
     } else {
         // Say Hi to new member
         $first_name = $update['message']['new_chat_member']['first_name'];
