@@ -77,7 +77,11 @@ class Telegram
             $response = json_decode($response, true);
             error_log("La solicitud falló con el error {$response['error_code']}: {$response['description']}\n");
             if ($http_code == 401) {
-                throw new Exception('El token provisto es inválido');
+                http_response_code(401);
+                throw new \Exception('El token provisto es inválido');
+            } else {
+                http_response_code($response['error_code']);
+                throw new \Exception("La solicitud falló con el error {$response['error_code']}: {$response['description']}\n");
             }
 
             return false;
